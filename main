@@ -1,0 +1,71 @@
+import random
+import time
+
+# Задача 1: Функции поиска
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1
+
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif target < arr[mid]:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return -1
+
+# Задача 2: Пары с нечетной суммой
+n = 10
+numbers = [random.randint(1, 50) for _ in range(n)]
+print("Числа:", numbers)
+
+even = len([x for x in numbers if x % 2 == 0])
+odd = n - even
+pairs = even * odd
+print(f"Пар с нечетной суммой: {pairs}")
+
+# Задача 3: Слияние списков
+a = sorted([random.randint(1, 100) for d in range(6)])
+b = sorted([random.randint(1, 100) for g in range(6)])
+print(f"\nСписок A: {a}")
+print(f"Список B: {b}")
+
+merged = []
+i = j = 0
+while i < len(a) and j < len(b):
+    if a[i] < b[j]:
+        merged.append(a[i])
+        i += 1
+    else:
+        merged.append(b[j])
+        j += 1
+
+merged += a[i:] + b[j:]
+print(f"Результат: {merged}")
+
+# Задача 4: Сравнение поиска
+size = 10000
+big_list = sorted([random.randint(1, 100000) for _ in range(size)])
+target = random.choice(big_list)
+
+start = time.time()
+linear_search(big_list, target)
+time_linear = time.time() - start
+
+start = time.time()
+binary_search(big_list, target)
+time_binary = time.time() - start
+
+print(f"\nЛинейный поиск: {time_linear:.6f} сек")
+print(f"Бинарный поиск:  {time_binary:.6f} сек")
+
+if time_binary < time_linear:
+    print("Бинарный быстрее!")
+else:
+    print("Что-то не так")
